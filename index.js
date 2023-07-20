@@ -27,9 +27,7 @@ app.get("/api/hello", function (req, res) {
 });
 app.get("/api/:date?",(req,res)=>{
   const dateParam = req.params.date;
-
   let inputDate;
-
   if (!dateParam) {
     // If the date parameter is empty, use the current time
     inputDate = new Date();
@@ -42,15 +40,9 @@ app.get("/api/:date?",(req,res)=>{
   if (isNaN(inputDate.getTime())) {
     return res.status(400).json({ error: 'Invalid Date' });
   }
-
-  // Convert the input date to a Unix timestamp in milliseconds
   const unixTimestamp = inputDate.getTime();
   const utcFormattedDate = format(inputDate, 'EEE, dd MMM yyyy HH:mm:ss \'GMT\'', { timeZone: 'GMT' });
-
-  // Create the JSON response with the 'unix' key
   const responseJson = { unix: unixTimestamp, utc: utcFormattedDate };
-
-  // Send the JSON response
   res.json(responseJson);
 });
 
